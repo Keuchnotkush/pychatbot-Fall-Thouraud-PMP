@@ -24,5 +24,18 @@ def extract_names(repertoire):
     for e in L:
         print(e)
 
+
+def transition(repertoire):
+    for fichier in os.listdir(repertoire):
+        with open(repertoire + "/" + fichier , "r+") as file:
+            for a in file.readlines():
+                for b in a :
+                    b = b.lower()
+
         
 
+# def tbis():
+#     with open("speeches/Nomination_Sarkozy.txt", "r+") as sak:
+#         for a in sak.realines():
+#             for b in a:
+#                 b = b.lower()
