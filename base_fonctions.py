@@ -32,15 +32,14 @@ def transition(repertoire):
         
         content = content.lower()
 
-        with open(repertoire + "/" + fichier , "w" , encoding= 'utf8') as file:
+        with open(repertoire + "/" + "clean" + fichier , "w" , encoding= 'utf8') as file:
             file.write(content)
+
+        os.rename(repertoire + "/" + "clean" + fichier , "cleaned/" + "clean" + fichier )
+
+
 
                     
 
         
 
-# def tbis():
-#     with open("speeches/Nomination_Sarkozy.txt", "r+") as sak:
-#         for a in sak.realines():
-#             for b in a:
-#                 b = b.lower()
