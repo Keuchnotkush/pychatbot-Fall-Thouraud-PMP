@@ -38,7 +38,28 @@ def transition(repertoire):
         os.rename(repertoire + "/" + "clean" + fichier , "cleaned/" + "clean" + fichier )
 
 
+def propre(repertoire):
+    L1 = []
 
+    file  = open("{}.txt".format(repertoire),"r",encoding="utf8")
+    lines = file.readlines()
+    for n, line in enumerate(lines) :
+        L1.append(str(line).replace("-", " "))
+    file.close()
+    for i in range(len(L1)):
+        L1[i] = L1[i].replace("'", " ")
+        L1[i] = L1[i].replace(".", "")
+        L1[i] = L1[i].replace(",", "")
+        L1[i] = L1[i].replace(";", "")
+        L1[i] = L1[i].replace("!", "")
+        L1[i] = L1[i].replace("?", "")
+    
+    f = open("{}.txt".format(repertoire),"w")
+    j = 0
+    for n, line in enumerate(lines) :
+        f.write("{}\n".format(L1[j]))
+        j += 1
+    f.close() 
                     
 
         
