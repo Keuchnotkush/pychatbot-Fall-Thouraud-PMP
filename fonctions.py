@@ -27,10 +27,15 @@ def extract_names(repertoire):
 
 def transition(repertoire):
     for fichier in os.listdir(repertoire):
-        with open(repertoire + "/" + fichier , "r+") as file:
-            for a in file.readlines():
-                for b in a :
-                    b = b.lower()
+        with open(repertoire + "/" + fichier , "r" , encoding= 'utf8') as file:
+            content = file.read()
+        
+        content = content.lower()
+
+        with open(repertoire + "/" + fichier , "w" , encoding= 'utf8') as file:
+            file.write(content)
+
+                    
 
         
 
