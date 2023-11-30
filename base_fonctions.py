@@ -25,41 +25,65 @@ def extract_names(repertoire):
         print(e)
 
 
-def transition(repertoire):
-    for fichier in os.listdir(repertoire):
-        with open(repertoire + "/" + fichier , "r" , encoding= 'utf8') as file:
-            content = file.read()
+def transition(drepertoire,frepertoire):
+    
+    fichiers = []
+    L1 = []
+    for fichier in os.listdir(drepertoire):
+        if fichier.endswith(".txt"):
+            fichiers.append(fichier)
+    
+    for i in range(len(fichiers)):
+
+        file  = open("{}\\{}".format(drepertoire,fichiers[i]),"r",encoding="utf8")
+        lines = file.readlines()
+        for n, line in enumerate(lines) :
+            L1.append(str(line).replace("\n", " "))
+        file.close()
+
+        try:
+            # Tentative d'ouverture du fichier en mode écriture
+            with open("{}\\{}".format(frepertoire,fichiers[i]), 'w') as file:
+                pass
+            print("Le fichier {} a été créé avec succès.".format(fichiers[i]))
+        except FileExistsError:
+            print("Le fichier existe déjà.")
+        f = open("{}\\{}".format(frepertoire,fichiers[i]),"w")
+        for n, line in enumerate(lines) :
+            f.write("{}\n".format(L1[n]))
+        f.close() 
         
-        content = content.lower()
-
-        with open(repertoire + "/" + "clean" + fichier , "w" , encoding= 'utf8') as file:
-            file.write(content)
-
-        os.rename(repertoire + "/" + "clean" + fichier , "cleaned/" + "clean" + fichier )
 
 
 def propre(repertoire):
-    L1 = []
-
-    file  = open("{}.txt".format(repertoire),"r",encoding="utf8")
-    lines = file.readlines()
-    for n, line in enumerate(lines) :
-        L1.append(str(line).replace("-", " "))
-    file.close()
-    for i in range(len(L1)):
-        L1[i] = L1[i].replace("'", " ")
-        L1[i] = L1[i].replace(".", "")
-        L1[i] = L1[i].replace(",", "")
-        L1[i] = L1[i].replace(";", "")
-        L1[i] = L1[i].replace("!", "")
-        L1[i] = L1[i].replace("?", "")
+    fichiers = []
+    for fichier in os.listdir(repertoire):
+        if fichier.endswith(".txt"):
+            fichiers.append(fichier)
     
-    f = open("{}.txt".format(repertoire),"w")
-    j = 0
-    for n, line in enumerate(lines) :
-        f.write("{}\n".format(L1[j]))
-        j += 1
-    f.close() 
+    for j in range(len(fichiers)):
+    
+        L1 = []
+
+        file  = open("{}\\{}".format(repertoire,fichiers[j]),"r",encoding="utf8")
+        lines = file.readlines()
+        for n, line in enumerate(lines) :
+            L1.append(str(line).replace("\n", " "))
+        file.close()
+        for i in range(len(L1)):
+            L1[i] = L1[i].replace("'", " ")
+            L1[i] = L1[i].replace(".", "")
+            L1[i] = L1[i].replace(",", "")
+            L1[i] = L1[i].replace(";", "")
+            L1[i] = L1[i].replace("!", "")
+            L1[i] = L1[i].replace("?", "")
+            L1[i] = L1[i].replace("-", " ")
+        
+        f = open("{}\\{}".format(repertoire,fichiers[j]),"w")
+        for n, line in enumerate(lines) :
+            f.write("{}\n".format(L1[n]))
+
+        f.close() 
                     
 
         
