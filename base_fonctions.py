@@ -24,6 +24,13 @@ def extract_names(repertoire):
     for e in L:
         print(e)
 
+def prenomforname(repertoire):
+    
+    L1 = ["Jacques Chirac","François Hollande","Emanuelle Macron"]
+    for fichier in os.listdir(repertoire):    
+
+        
+
 
 def transition(drepertoire,frepertoire):
     

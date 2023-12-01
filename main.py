@@ -29,7 +29,7 @@ elif ask == 1:
     print(TF.tf(x))
 elif ask == 2:
     x = str(input("Saisir le nom du répértoire "))
-    print(TF.calculate_idf(x))
+    print(TF.calcul_score_idf(x))
 elif ask == 3:
     x = str(input("Saisir le nom du répértoire "))
     print(TF.calcul_matrice_tf_idf(x))

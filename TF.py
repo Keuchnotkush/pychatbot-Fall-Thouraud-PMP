@@ -25,33 +25,7 @@ def tf(repertoire):
     return word_counts
 
 
-def calculate_idf(corpus_directory):
-    document_frequencies = {}
 
-    total_documents = 0
-
-    for filename in os.listdir(corpus_directory):
-        file_path = os.path.join(corpus_directory, filename)
-
-        if os.path.isfile(file_path):
-            total_documents += 1
-
-            with open(file_path, 'r') as file:
-                content = file.read()
-
-                words = content.split()
-
-                for word in word_set:
-                    if word in document_frequencies:
-                        document_frequencies[word] += 1
-                    else:
-                        document_frequencies[word] = 1
-
-    idf_scores = {}
-    for word, frequency in document_frequencies.items():
-        idf_scores[word] = math.log(total_documents / frequency)
-
-    return idf_scores
 
 def calcul_occurrences(chaine):
     mots = chaine.split()
@@ -121,21 +95,14 @@ def mots_moins_importants(repertoire):
         if fichier.endswith(".txt"):
             fichiers.append(fichier)
     
-    for i in range(len(fichiers)):
-        res = calcul_matrice_tf_idf(repertoire)
-        for mot in res:
-            print(mot, res[mot])
-            if 0 == res[mot]:
-                if mot in motused:
-                    variabledechet = 0
-                else: 
-                    motused.append(mot)
-        
-    
+    res = calcul_matrice_tf_idf(repertoire)
+    for i in range(len(res)):
+        for mot in res[i]:
+            if res[i][mot] == 0:
+                motused.append(mot)
+
     textoutput = "Les mots les moins important sont : {}".format(motused)
     return textoutput
-    
-    return mots_moins_importants
 
 
 
@@ -144,8 +111,22 @@ def mots_moins_importants(repertoire):
 
 
 def mots_plus_importants(repertoire):
+    fichiers = []
+    motused = "les"
+    _y = 0
+    for fichier in os.listdir(repertoire):
+        if fichier.endswith(".txt"):
+            fichiers.append(fichier)
     
-    return mots_plus_importants
+    res = calcul_matrice_tf_idf(repertoire)
+    for i in range(len(res)):
+        for mot in res[i]:
+            if res[i][mot] > res[_y][motused]:
+                motused = mot
+                _y = i
+
+    textoutput = "Le mot le plus important est : {}".format(motused)
+    return textoutput
 
 
 
