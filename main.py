@@ -13,6 +13,7 @@ print("- Indiquer le(s) mot(s) le(s) plus répété(s) par le président Chirac 
 print("- Indiquer le(s) nom(s) du (des) président(s) qui a (ont) parlé de la « Nation » et celui qui l’a répété le plus de fois (7)")
 print("- Indiquer le premier président à parler du climat et/ou de l’écologie (8)")
 print("- Hormis les mots dits « non importants », quel(s) est(sont) le(s) mot(s) que tous les présidents ont évoqués (9)")
+print("généralement il faut écrire 'cleaned' pour les répértoires *")
 ask = int(input("Saisie : "))
 while ask > 9 or ask < 0:
     ask = int(input("Saisie : "))

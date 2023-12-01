@@ -26,36 +26,27 @@ def tf(repertoire):
 
 
 def calculate_idf(corpus_directory):
-    # Dictionnaire pour stocker les fréquences de documents pour chaque mot
     document_frequencies = {}
 
-    # Compter le nombre total de documents dans le corpus
     total_documents = 0
 
-    # Parcourir tous les fichiers dans le répertoire du corpus
     for filename in os.listdir(corpus_directory):
         file_path = os.path.join(corpus_directory, filename)
 
-        # Vérifier si le chemin est un fichier
         if os.path.isfile(file_path):
             total_documents += 1
 
-            # Lire le contenu du fichier
             with open(file_path, 'r') as file:
                 content = file.read()
 
-                # Séparer le contenu en mots
                 words = content.split()
 
-                # Compter la fréquence de document pour chaque mot
-                word_set = set(words)  # Utiliser un ensemble pour éviter de compter plusieurs fois le même mot dans le même document
                 for word in word_set:
                     if word in document_frequencies:
                         document_frequencies[word] += 1
                     else:
                         document_frequencies[word] = 1
 
-    # Calculer le score IDF pour chaque mot
     idf_scores = {}
     for word, frequency in document_frequencies.items():
         idf_scores[word] = math.log(total_documents / frequency)
@@ -116,41 +107,55 @@ def calcul_matrice_tf_idf(repertoire):
     
     return matrice_tf_idf
 
+
+
+
+
+
+
+
 def mots_moins_importants(repertoire):
-    matrice_tf_idf = calcul_matrice_tf_idf(repertoire)
-    mots_moins_importants = []
-    count = 0
-    
+    fichiers = []
+    motused = []
     for fichier in os.listdir(repertoire):
         if fichier.endswith(".txt"):
-            
+            fichiers.append(fichier)
     
-            for mot in matrice_tf_idf[count]:
-                scores_tf_idf = [doc.get(mot, 0) for doc in matrice_tf_idf]
-                z = True
-                for i in range(count):
-                    
-                    if scores_tf_idf[i] != 0:
-                        z = False
-                if z == True:
-                    mots_moins_importants.append(mot)
-                z = True
-            
-            
-            count += 1
+    for i in range(len(fichiers)):
+        res = calcul_matrice_tf_idf(repertoire)
+        for mot in res:
+            print(mot, res[mot])
+            if 0 == res[mot]:
+                if mot in motused:
+                    variabledechet = 0
+                else: 
+                    motused.append(mot)
+        
+    
+    textoutput = "Les mots les moins important sont : {}".format(motused)
+    return textoutput
     
     return mots_moins_importants
 
+
+
+
+
+
+
 def mots_plus_importants(repertoire):
-    matrice_tf_idf = calcul_matrice_tf_idf(repertoire)
-    mots_plus_importants = []
-    
-    for mot in matrice_tf_idf[0].keys():
-        scores_tf_idf = [doc.get(mot, 0) for doc in matrice_tf_idf]
-        if all(score == max(scores_tf_idf) for score in scores_tf_idf):
-            mots_plus_importants.append(mot)
     
     return mots_plus_importants
+
+
+
+
+
+
+
+
+
+
 
 def mots_plus_repetes_president(repertoire):
     fichiers_chirac = []
@@ -174,7 +179,7 @@ def mots_plus_repetes_president(repertoire):
             if max <= res[mot]:
                 max = res[mot]
                 motofficiel = mot
-    textoutput = "Le mot '{}' est répété {} fois".format(motofficiel,max)
+    textoutput = "Le mot '{}' est répété {} fois chez Chirac".format(motofficiel,max)
     return textoutput
     
 

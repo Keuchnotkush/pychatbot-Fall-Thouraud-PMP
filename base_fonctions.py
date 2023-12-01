@@ -78,6 +78,7 @@ def propre(repertoire):
             L1[i] = L1[i].replace("!", "")
             L1[i] = L1[i].replace("?", "")
             L1[i] = L1[i].replace("-", " ")
+            L1[i] = L1[i].lower()
         
         f = open("{}\\{}".format(repertoire,fichiers[j]),"w")
         for n, line in enumerate(lines) :
