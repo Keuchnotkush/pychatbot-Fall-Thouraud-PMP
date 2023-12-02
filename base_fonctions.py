@@ -11,24 +11,58 @@ def afficher_fichiers(repertoire):
         if os.path.isfile(os.path.join(repertoire, fichier)):
             print(fichier)
 
+
 def extract_names(repertoire):
-    L = []
-    for fichier in os.listdir(repertoire):      
-        
-        if "1" in fichier and fichier.removeprefix("Nomination_").removesuffix("1.txt") not in L:
-            L.append(fichier.removeprefix("Nomination_").removesuffix("1.txt"))
-        elif "2" in fichier and fichier.removeprefix("Nomination_").removesuffix("2.txt") not in L:
-            L.append(fichier.removeprefix("Nomination_").removesuffix("2.txt"))
-        elif "1" not in fichier and "2" not in fichier and fichier.removeprefix("Nomination_").removesuffix(".txt") not in L:
-            L.append(fichier.removeprefix("Nomination_").removesuffix(".txt"))
-    for e in L:
-        print(e)
+    L2 = []
+    for fichier in os.listdir(repertoire):
+        L2.append(fichier)
+    for i in range(len(L2)):
+        L2[i] = L2[i].replace(".txt","")
+        L2[i] = L2[i].replace("0","")
+        L2[i] = L2[i].replace("1","")
+        L2[i] = L2[i].replace("2","")
+        L2[i] = L2[i].replace("3","")
+        L2[i] = L2[i].replace("4","")
+        L2[i] = L2[i].replace("5","")
+        L2[i] = L2[i].replace("6","")
+        L2[i] = L2[i].replace("7","")
+        L2[i] = L2[i].replace("8","")
+        L2[i] = L2[i].replace("9","")
+        L2[i] = L2[i].replace("Nomination_","")
+    
+    L3 = []
+    for nom in L2:
+        if nom not in L3:
+            L3.append(nom)
+            print(nom)
 
 def prenomforname(repertoire):
     
-    L1 = ["Jacques Chirac","François Hollande","Emanuelle Macron"]
-    for fichier in os.listdir(repertoire):    
-
+    L1 = ["Valéry Giscard dEstaing","Jacques Chirac","Nicolas Sarkozy","François Mitterrand","François Hollande","Emanuelle Macron"]
+    L2 = []
+    for fichier in os.listdir(repertoire):
+        L2.append(fichier)
+    for i in range(len(L2)):
+        L2[i] = L2[i].replace(".txt","")
+        L2[i] = L2[i].replace("0","")
+        L2[i] = L2[i].replace("1","")
+        L2[i] = L2[i].replace("2","")
+        L2[i] = L2[i].replace("3","")
+        L2[i] = L2[i].replace("4","")
+        L2[i] = L2[i].replace("5","")
+        L2[i] = L2[i].replace("6","")
+        L2[i] = L2[i].replace("7","")
+        L2[i] = L2[i].replace("8","")
+        L2[i] = L2[i].replace("9","")
+        L2[i] = L2[i].replace("Nomination_","")
+    
+    L3 = []
+    for nom in L2:
+        if nom not in L3:
+            L3.append(nom)
+            for prenom in L1:
+                if nom in prenom:
+                    print(prenom)
         
 
 

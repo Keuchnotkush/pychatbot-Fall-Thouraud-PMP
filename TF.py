@@ -273,9 +273,7 @@ def mots_evoques_par_tous_presidents(repertoire):
                     if motscheck == False:
                         break
                     else:
-                        if mot1 in motsdit:
-                            variablebouchetrou = 0
-                        else:
+                        if mot1 not in motsdit:
                             motsdit.append(mot1)
             if j == len(L1):
                 if motscheck == True:
