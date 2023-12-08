@@ -35,7 +35,7 @@ elif ask == 2:
     print(TF.calcul_score_idf(x))
 elif ask == 3:
     x = str(input("Saisir le nom du répértoire "))
-    print(TF.calcul_matrice_tf_idf(x))
+    print(TF.calcule_matrice_tf_idf(x))
 elif ask == 4:
     x = str(input("Saisir le nom du répértoire "))
     print(TF.mots_moins_importants(x))
