@@ -1,9 +1,9 @@
 import os
 import math
-def tf(repertoire):
+def tf(place,repertoire):
     L1 = []
 
-    file  = open("speeches\{}.txt".format(repertoire),"r",encoding="utf8")
+    file  = open("{}\\{}".format(place,repertoire),"r",encoding="utf8")
     lines = file.readlines()
     for n, line in enumerate(lines) :
         L1.append(str(line))
@@ -60,12 +60,12 @@ def calcul_score_idf(repertoire):
     return score_idf
 
 def calcul_matrice_tf_idf(repertoire):
-    score_idf = calcul_score_idf(repertoire)
     matrice_tf_idf = []
     mots_uniques = set()
-    
+    nbfichier = 0
     for fichier in os.listdir(repertoire):
-        with open(os.path.join(repertoire, fichier), 'r') as f:
+        nbfichier += 1
+        with open(os.path.join(repertoire, fichier), 'r',encoding="utf8") as f:
             contenu = f.read()
             occurrences = calcul_occurrences(contenu)
             mots_uniques.update(occurrences.keys())
@@ -73,44 +73,22 @@ def calcul_matrice_tf_idf(repertoire):
     
     mots_uniques = sorted(list(mots_uniques))
     
-    for i in range(len(matrice_tf_idf)):
-        for mot in mots_uniques:
-            tf = matrice_tf_idf[i].get(mot, 0)
-            idf = score_idf.get(mot, 0)
-            matrice_tf_idf[i][mot] = tf * idf
-    print(matrice_tf_idf)
-
-def calcule_matrice_tf_idf(repertoire):
-    # Calcul du score IDF pour chaque mot
-    score_idf = calcul_score_idf(repertoire)
-    
-    # Initialisation de la matrice TF-IDF
-    matrice_tf_idf = []
-    mots_uniques = set()
-    
-    # Parcours de tous les fichiers dans le répertoire
+    L2 = []
     for fichier in os.listdir(repertoire):
-        with open(os.path.join(repertoire, fichier), 'r') as f:
-            contenu = f.read()
-            # Calcul du score TF pour chaque mot dans le fichier
-            occurrences = calcul_occurrences(contenu)
-            # Ajout des mots uniques dans l'ensemble des mots uniques
-            mots_uniques.update(occurrences.keys())
-            # Ajout des scores TF-IDF pour chaque mot dans la matrice TF-IDF
-            matrice_tf_idf.append({mot: occurrences[mot] * score_idf.get(mot, 0) for mot in occurrences})
-    
-    # Tri des mots uniques par ordre alphabétique
-    mots_uniques = sorted(list(mots_uniques))
-    
-    # Construction de la matrice TF-IDF en ajoutant des zéros pour les mots absents dans chaque fichier
-    matrice_tf_idf_complete = []
-    for i in range(len(matrice_tf_idf)):
-        ligne = [matrice_tf_idf[i].get(mot, 0) for mot in mots_uniques]
-        matrice_tf_idf_complete.append(ligne)
-    
-    # Retour de la matrice TF-IDF
-    return matrice_tf_idf_complete
-
+        L2.append(fichier)
+    result = {}
+    for i in range(len(mots_uniques)):
+        L20 = []
+        for j in range(len(L2)):
+            
+            idfscore = calcul_score_idf(repertoire)
+            tfscore = tf(str(repertoire),str(L2[j]))
+            
+            if mots_uniques[i] in tfscore:
+                L20.append(idfscore[mots_uniques[i]] * tfscore[mots_uniques[i]])
+        
+        result[mots_uniques[i]] = L20
+    return result
 
 
 

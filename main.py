@@ -28,14 +28,14 @@ if ask == 0:
     base_fonctions.propre(y)
     print("Les speeches sont nétoyés !")
 elif ask == 1:
-    x = str(input("Saisir le nom du fichier (sans le .txt) "))
-    print(TF.tf(x))
+    x = str(input("Saisir le nom du fichier (avec le .txt) "))
+    print(TF.tf("speeches",x))
 elif ask == 2:
     x = str(input("Saisir le nom du répértoire "))
     print(TF.calcul_score_idf(x))
 elif ask == 3:
     x = str(input("Saisir le nom du répértoire "))
-    print(TF.calcule_matrice_tf_idf(x))
+    print(TF.calcul_matrice_tf_idf(x))
 elif ask == 4:
     x = str(input("Saisir le nom du répértoire "))
     print(TF.mots_moins_importants(x))
