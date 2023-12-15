@@ -1,4 +1,4 @@
-import base_fonctions, TF, part3
+import base_fonctions, TF, part2
 repertoire = "speeches"
 
 part = int(input("Nous utiliserons la partie (1/2) "))
@@ -73,4 +73,4 @@ if part == 1:
 elif part == 2:
     question = str(input("Quelle est ta question ? "))
 
-    print(part3.questtfidf(question))
+    print(part2.questtfidf(question))
