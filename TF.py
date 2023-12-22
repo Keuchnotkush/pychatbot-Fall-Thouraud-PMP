@@ -77,11 +77,12 @@ def calcul_matrice_tf_idf(repertoire):
     for fichier in os.listdir(repertoire):
         L2.append(fichier)
     result = {}
+    idfscore = calcul_score_idf(repertoire)
     for i in range(len(mots_uniques)):
         L20 = []
         for j in range(len(L2)):
             
-            idfscore = calcul_score_idf(repertoire)
+            
             
             tfscore = tf(str(repertoire),str(L2[j]))
             

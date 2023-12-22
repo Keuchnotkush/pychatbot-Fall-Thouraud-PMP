@@ -7,7 +7,7 @@ while part < 1 or part > 2:
 
 if part == 1:
 
-    print("== Menu Principale ==|\n")
+    print("== Menu Principal ==|\n")
     print("Que souhaitez vous faire ? (Saisir le nombre entre parenthèse)") 
     print("- Pour clean le speeches (0)")
     print("- Voir le TF (1)")
