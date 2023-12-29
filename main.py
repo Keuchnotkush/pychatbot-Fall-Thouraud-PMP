@@ -73,4 +73,4 @@ if part == 1:
 elif part == 2:
     question = str(input("Quelle est ta question ? "))
 
-    print(part2.questtfidf(question))
+    print(part2.MotPertinentViaFichier(question))

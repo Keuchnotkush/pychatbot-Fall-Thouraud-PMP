@@ -67,32 +67,20 @@ def prenomforname(repertoire):
 
 
 def transition(drepertoire,frepertoire):
-    
     fichiers = []
-    L1 = []
     for fichier in os.listdir(drepertoire):
         if fichier.endswith(".txt"):
             fichiers.append(fichier)
     
-    for i in range(len(fichiers)):
+    for i in fichiers:
+        source_file = '{}/{}'.format(drepertoire,i)
+        destination_file = '{}/{}'.format(frepertoire,i)
 
-        file  = open("{}\\{}".format(drepertoire,fichiers[i]),"r",encoding="utf8")
-        lines = file.readlines()
-        for n, line in enumerate(lines) :
-            L1.append(str(line).replace("\n", " "))
-        file.close()
+        with open(source_file, 'r') as f_source:
+            with open(destination_file, 'w') as f_dest:
+                for line in f_source:
+                    f_dest.write(line)
 
-        try:
-            # Tentative d'ouverture du fichier en mode écriture
-            with open("{}\\{}".format(frepertoire,fichiers[i]), 'w') as file:
-                pass
-            print("Le fichier {} a été créé avec succès.".format(fichiers[i]))
-        except FileExistsError:
-            print("Le fichier existe déjà.")
-        f = open("{}\\{}".format(frepertoire,fichiers[i]),"w")
-        for n, line in enumerate(lines) :
-            f.write("{}\n".format(L1[n]))
-        f.close() 
         
 
 

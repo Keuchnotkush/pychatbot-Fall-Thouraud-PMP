@@ -88,6 +88,8 @@ def calcul_matrice_tf_idf(repertoire):
             
             if mots_uniques[i] in tfscore and mots_uniques[i] in idfscore.keys():
                 L20.append(idfscore[mots_uniques[i]] * tfscore[mots_uniques[i]])
+            else:
+                L20.append(0.0)
         
         result[mots_uniques[i]] = L20
     return result

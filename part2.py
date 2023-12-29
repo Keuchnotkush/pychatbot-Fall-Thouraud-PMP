@@ -31,7 +31,6 @@ def questtfidf(question):
     quest = ""
     for e in token(question):
         quest += e + " "
-    identify = (quest , "cleaned")
     occMots = TF.calcul_occurrences(quest)
     result = TF.calcul_score_idf("cleaned")
     L = {}
@@ -42,3 +41,24 @@ def questtfidf(question):
         else:
             result[i] = 0
     return L
+
+def MotPertinentViaFichier(question):
+    dicquest = questtfidf(question)
+    max = 0
+    word = ""
+    for i in dicquest:
+        if max <= dicquest[i]:
+            max = dicquest[i]
+            word = i
+    fichiers = []
+    for fichier in os.listdir("cleaned"):
+        if fichier.endswith(".txt"):
+            fichiers.append(fichier)
+    dico = TF.calcul_matrice_tf_idf("cleaned")
+    nomfichier = ""
+    max = 0
+    for i in range(len(fichiers)):
+        if dico[word][i] > max:
+            max = dico[word][i]
+            nomfichier = fichiers[i]
+    return nomfichier
