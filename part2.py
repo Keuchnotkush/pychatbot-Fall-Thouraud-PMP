@@ -1,7 +1,7 @@
 import os, math
 import TF
 punc = '''!()-[]{};:'",<>./?@#$%^&*_~'''
-MotInterreogation = ["comment","quoi","pourquoi"]
+MotInterreogation = ["comment","quoi","pourquoi","dire"]
 
 def token(sentence):
     L = []
