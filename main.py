@@ -72,5 +72,8 @@ if part == 1:
 
 elif part == 2:
     question = str(input("Quelle est ta question ? "))
-
-    print(part2.MotPertinentViaFichier(question))
+    word = part2.motImportant(question)
+    print("Document pertinent retourné :",part2.MotPertinentViaFichier(word))
+    print("Mot ayant le TF-IDF le plus élevé :",word)
+    print("La réponse générée :",part2.reponseViaFile(word))
+    print("\n\nRéponse final:\n","{} {}.".format(part2.generationentry(question),part2.reponseViaFile(word)))

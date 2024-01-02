@@ -1,6 +1,7 @@
 import os, math
 import TF
 punc = '''!()-[]{};:'",<>./?@#$%^&*_~'''
+MotInterreogation = ["comment","quoi","pourquoi"]
 
 def token(sentence):
     L = []
@@ -42,14 +43,18 @@ def questtfidf(question):
             result[i] = 0
     return L
 
-def MotPertinentViaFichier(question):
+def motImportant(question):
     dicquest = questtfidf(question)
     max = 0
     word = ""
     for i in dicquest:
-        if max <= dicquest[i]:
-            max = dicquest[i]
-            word = i
+        if i not in MotInterreogation:
+            if max <= dicquest[i]:
+                max = dicquest[i]
+                word = i
+    return word
+
+def MotPertinentViaFichier(word):
     fichiers = []
     for fichier in os.listdir("cleaned"):
         if fichier.endswith(".txt"):
@@ -62,3 +67,37 @@ def MotPertinentViaFichier(question):
             max = dico[word][i]
             nomfichier = fichiers[i]
     return nomfichier
+
+def reponseViaFile(word):
+    file = MotPertinentViaFichier(word)
+    L1 = []
+
+    file  = open("cleaned\\{}".format(file),"r",encoding="utf8")
+    lines = file.readlines()
+    for n, line in enumerate(lines) :
+        L1.append(str(line).replace("\n", " "))
+    file.close()
+    reponse = ""
+    for i in range(len(L1)):
+        if word in L1[i]:
+            reponse = L1[i]
+            break
+    return reponse
+
+def generationentry(question):
+    question = question.replace("'", " ")
+    question = question.replace(".", "")
+    question = question.replace(",", "")
+    question = question.replace(";", "")
+    question = question.replace("!", "")
+    question = question.replace("?", "")
+    question = question.replace("-", " ")
+    question = question.lower()
+    question_starters = {
+ "comment": "Après analyse,",
+ "pourquoi": "Car,",
+ "peux tu": "Oui, bien sûr!"
+}
+    for i in question_starters:
+        if i in question:
+            return question_starters[i]
