@@ -1,7 +1,7 @@
 import os, math
 import TF
 punc = '''!()-[]{};:'",<>./?@#$%^&*_~'''
-MotInterreogation = ["comment","quoi","pourquoi","dire"]
+MotPoubelle = ["comment","quoi","pourquoi","dire","porte"]
 
 def token(sentence):
     L = []
@@ -48,7 +48,7 @@ def motImportant(question):
     max = 0
     word = ""
     for i in dicquest:
-        if i not in MotInterreogation:
+        if i not in MotPoubelle:
             if max <= dicquest[i]:
                 max = dicquest[i]
                 word = i
@@ -100,4 +100,9 @@ def generationentry(question):
 }
     for i in question_starters:
         if i in question:
-            return question_starters[i]
+            reponse = question_starters[i]
+            break
+    reponse = reponse.replace("l ", "l'")
+    reponse = reponse.replace("c ", "c'")
+    reponse = reponse.replace("s ", "s'")
+    return reponse
