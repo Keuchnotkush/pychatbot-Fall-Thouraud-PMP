@@ -82,6 +82,10 @@ def reponseViaFile(word):
         if word in L1[i]:
             reponse = L1[i]
             break
+    
+    reponse = reponse.replace("l ", "l'")
+    reponse = reponse.replace("c ", "c'")
+    reponse = reponse.replace("s ", "s'")
     return reponse
 
 def generationentry(question):
@@ -100,9 +104,5 @@ def generationentry(question):
 }
     for i in question_starters:
         if i in question:
-            reponse = question_starters[i]
-            break
-    reponse = reponse.replace("l ", "l'")
-    reponse = reponse.replace("c ", "c'")
-    reponse = reponse.replace("s ", "s'")
-    return reponse
+            return question_starters[i]
+            
