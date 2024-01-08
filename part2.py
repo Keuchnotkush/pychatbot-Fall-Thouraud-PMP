@@ -83,9 +83,9 @@ def reponseViaFile(word):
             reponse = L1[i]
             break
     
-    reponse = reponse.replace("l ", "l'")
-    reponse = reponse.replace("c ", "c'")
-    reponse = reponse.replace("s ", "s'")
+    reponse = reponse.replace(" l ", " l'")
+    reponse = reponse.replace(" c ", " c'")
+    reponse = reponse.replace(" s ", " s'")
     return reponse
 
 def generationentry(question):
