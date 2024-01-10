@@ -106,5 +106,5 @@ def generationentry(question):
         if i in question:
             return question_starters[i]
         else:
-            return " "
+            return "Voici une réponse qui pourrait vous aider"
             
