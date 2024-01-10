@@ -71,7 +71,7 @@ def main_menu():
             print("erreur, veuillez relancer le programme..")
 
     elif part == 2:
-        question = str(input("Quelle est ta question ? "))
+        question = str(input("Quelle est votre question ? "))
         word = part2.motImportant(question)
         print("Document pertinent retourné :",part2.MotPertinentViaFichier(word))
         print("Mot ayant le TF-IDF le plus élevé :",word)
@@ -81,5 +81,7 @@ def main_menu():
     o = str(input("Voulez-vous effectuer une autre opération ? Oui ou Non : "))
     if o == "Oui":
         main_menu()
+    elif o == "Non":
+        print("Trés bien.")
 
 main_menu()
