@@ -72,7 +72,7 @@ def reponseViaFile(word):
     file = MotPertinentViaFichier(word)
     L1 = []
 
-    file  = open("cleaned\\{}".format(file),"r",encoding="utf8")
+    file  = open("cleaned\{}".format(file),"r",encoding="utf8")
     lines = file.readlines()
     for n, line in enumerate(lines) :
         L1.append(str(line).replace("\n", " "))
@@ -100,9 +100,11 @@ def generationentry(question):
     question_starters = {
  "comment": "Après analyse,",
  "pourquoi": "Car,",
- "peux tu": "Oui, bien sûr!"
+ "peux tu": "Oui, bien sûr!",
 }
     for i in question_starters:
         if i in question:
             return question_starters[i]
+        else:
+            return " "
             
