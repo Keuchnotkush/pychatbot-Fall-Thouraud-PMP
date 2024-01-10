@@ -1,7 +1,14 @@
+# Auteurs : Hugo Thouraud de Lavignére et Cheikh Tidiane Fall | My First Chat Bot 
+# Ce fichier contient les fonctions de base du projet qui permettrons au corpus d'être exploitable par le reste des fonctions
+
+
 import os
-def afficher_fichiers(repertoire):
-    # Vérifier si le répertoire existe
-    if not os.path.exists(repertoire):
+def show_files(repertoire):
+    """
+        Cette fonction qui prend en paramétre un répertoire , permet d'afficher tout les fichiers de celui-ci.
+    """
+    
+    if not os.path.exists(repertoire):# Vérifier si le répertoire existe
         print("Le répertoire spécifié n'existe pas.")
         return
 
@@ -13,10 +20,13 @@ def afficher_fichiers(repertoire):
 
 
 def extract_names(repertoire):
+    """
+        Cette fonction permet d'extraire les nom des documents texte contenant les nominations de présidents. Ceux-ci sont dans le répertoire.
+    """
     L2 = []
     for fichier in os.listdir(repertoire):
         L2.append(fichier)
-    for i in range(len(L2)):
+    for i in range(len(L2)): #Notre boucle permet de remplacer les éléments qui ne constituent pas le nom des présidents
         L2[i] = L2[i].replace(".txt","")
         L2[i] = L2[i].replace("0","")
         L2[i] = L2[i].replace("1","")
@@ -36,7 +46,10 @@ def extract_names(repertoire):
             L3.append(nom)
             print(nom)
 
-def prenomforname(repertoire):
+def names_f(repertoire):
+    '''
+        Cette fonction à le même but que la précédente mais juste une approche différente
+    '''
     
     L1 = ["Valéry Giscard dEstaing","Jacques Chirac","Nicolas Sarkozy","François Mitterrand","François Hollande","Emanuelle Macron"]
     L2 = []
@@ -67,24 +80,26 @@ def prenomforname(repertoire):
 
 
 def transition(drepertoire,frepertoire):
+    ''' Cette fonction nous permet de déplacer des fichiers d'un répertoire A vers un répertoire B'''
     fichiers = []
-    for fichier in os.listdir(drepertoire):
+    for fichier in os.listdir(drepertoire): # Boucle pour récuperer chaque fichiers dans le répertoire
         if fichier.endswith(".txt"):
             fichiers.append(fichier)
     
     for i in fichiers:
-        source_file = '{}/{}'.format(drepertoire,i)
+        source_file = '{}/{}'.format(drepertoire,i)         # Nous permet de donner un nom au nouveau dossier  ainsi que de repérer le premier dossier 
         destination_file = '{}/{}'.format(frepertoire,i)
 
         with open(source_file, 'r') as f_source:
-            with open(destination_file, 'w') as f_dest:
+            with open(destination_file, 'w') as f_dest:     # Réecrit le contenu dans les nouveaux fichiers
                 for line in f_source:
                     f_dest.write(line)
 
         
 
 
-def propre(repertoire):
+def cleaner(repertoire):
+    ''' Permet de rendre les fichiers du répertoire exploitables. '''
     fichiers = []
     for fichier in os.listdir(repertoire):
         if fichier.endswith(".txt"):

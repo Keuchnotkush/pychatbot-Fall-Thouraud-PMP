@@ -1,9 +1,12 @@
+# Auteurs : Hugo Thouraud de Lavignére et Cheikh Tidiane Fall | My First Chat Bot 
+# Ce fichier contient le code qui permet à l'utilisateur de poser des questions
 import os, math
 import TF
 punc = '''!()-[]{};:'",<>./?@#$%^&*_~'''
 MotPoubelle = ["comment","quoi","pourquoi","dire","porte"]
 
 def token(sentence):
+    ''' Permet de tokenizer une phrase. La rendre utilisable par  code'''
     L = []
     n = ""
     for o in sentence.split(" "):
@@ -15,6 +18,7 @@ def token(sentence):
 
 
 def identify(sentence , repertoire):
+    ''' Permet d'identify une phrase ou des mots de celles-ci au sein d'un repertoire contenant des fichiers texte '''
     listu = token(sentence)
     keep = []
     for fichier in os.listdir(repertoire):
@@ -28,12 +32,13 @@ def identify(sentence , repertoire):
     return keep
 
 def questtfidf(question):
+    ''' Permet de trouver le score tfidf d'une question (Chaîne de caractères )'''
 
     quest = ""
     for e in token(question):
         quest += e + " "
-    occMots = TF.calcul_occurrences(quest)
-    result = TF.calcul_score_idf("cleaned")
+    occMots = TF.get_occurrences(quest)
+    result = TF.get_idf_score("cleaned")
     L = {}
     for i in result.keys():
         if i in occMots:
@@ -43,7 +48,8 @@ def questtfidf(question):
             result[i] = 0
     return L
 
-def motImportant(question):
+def Revelant_word(question):
+    ''' Permet de trouver le mot le plus pertinent dans la question par rapport à une liste mot poubelle initialisée en dur plus tôt'''
     dicquest = questtfidf(question)
     max = 0
     word = ""
@@ -54,12 +60,13 @@ def motImportant(question):
                 word = i
     return word
 
-def MotPertinentViaFichier(word):
+def Revelant_word_file(word):
+    ''' Permet de trouver le mot le plus pertinent par rapport au fichiers du corpus '''
     fichiers = []
     for fichier in os.listdir("cleaned"):
         if fichier.endswith(".txt"):
             fichiers.append(fichier)
-    dico = TF.calcul_matrice_tf_idf("cleaned")
+    dico = TF.get_matrix_tf_idf("cleaned")
     nomfichier = ""
     max = 0
     for i in range(len(fichiers)):
@@ -69,7 +76,8 @@ def MotPertinentViaFichier(word):
     return nomfichier
 
 def reponseViaFile(word):
-    file = MotPertinentViaFichier(word)
+    ''' Constitue une partie du systéme de réponse. permet d'y intégrer le mot pertinent'''
+    file = Revelant_word_file(word)
     L1 = []
 
     file  = open("cleaned\{}".format(file),"r",encoding="utf8")
@@ -89,6 +97,7 @@ def reponseViaFile(word):
     return reponse
 
 def generationentry(question):
+    ''' Constitue l'autre partie du systéme de réponse. Permet de choisir l'expression avec laquelle le bot va répondre'''
     question = question.replace("'", " ")
     question = question.replace(".", "")
     question = question.replace(",", "")

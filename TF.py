@@ -1,6 +1,9 @@
+# Auteurs : Hugo Thouraud de Lavignére et Cheikh Tidiane Fall | My First Chat Bot 
+# Ce fichier contient majoritairement le code pour la matrix TFIDF ainsi que des certaines fonctions qui y ont recours.
 import os
 import math
 def tf(place,repertoire):
+    ''' Calcul du Term-Frequency score avec place qui est le fichier et repertoire'''
     L1 = []
 
     file  = open("{}\\{}".format(place,repertoire),"r",encoding="utf8")
@@ -27,7 +30,8 @@ def tf(place,repertoire):
 
 
 
-def calcul_occurrences(chaine):
+def get_occurrences(chaine):
+    ''' Permet d'avoir l'occurence d'un mot dans une chaine de caractères'''
     mots = chaine.split()
     occurrences = {}
     for mot in mots:
@@ -38,7 +42,8 @@ def calcul_occurrences(chaine):
     return occurrences
 
 
-def calcul_score_idf(repertoire):
+def get_idf_score(repertoire):
+    ''' Permet d'obtenir le score idf d'un répertoire'''
     nb_documents = 0
     mots_documents = {}
     score_idf = {}
@@ -59,7 +64,8 @@ def calcul_score_idf(repertoire):
     
     return score_idf
 
-def calcul_matrice_tf_idf(repertoire):
+def get_matrix_tf_idf(repertoire):
+    ''' Calcul le score TF * IDF d'un répertoire'''
     matrice_tf_idf = []
     mots_uniques = set()
     nbfichier = 0
@@ -67,7 +73,7 @@ def calcul_matrice_tf_idf(repertoire):
         nbfichier += 1
         with open(os.path.join(repertoire, fichier), 'r',encoding="utf8") as f:
             contenu = f.read()
-            occurrences = calcul_occurrences(contenu)
+            occurrences = get_occurrences(contenu)
             mots_uniques.update(occurrences.keys())
             matrice_tf_idf.append(occurrences)
     
@@ -77,7 +83,7 @@ def calcul_matrice_tf_idf(repertoire):
     for fichier in os.listdir(repertoire):
         L2.append(fichier)
     result = {}
-    idfscore = calcul_score_idf(repertoire)
+    idfscore = get_idf_score(repertoire)
     for i in range(len(mots_uniques)):
         L20 = []
         for j in range(len(L2)):
@@ -100,14 +106,15 @@ def calcul_matrice_tf_idf(repertoire):
 
 
 
-def mots_moins_importants(repertoire):
+def less_important_word(repertoire):
+    ''' Permet de trouver les mots les moins important du corpus'''
     fichiers = []
     motused = []
     for fichier in os.listdir(repertoire):
         if fichier.endswith(".txt"):
             fichiers.append(fichier)
     
-    res = calcul_matrice_tf_idf(repertoire)
+    res = get_matrix_tf_idf(repertoire)
     for i in range(len(res)):
         for mot in res[i]:
             if res[i][mot] == 0:
@@ -122,7 +129,8 @@ def mots_moins_importants(repertoire):
 
 
 
-def mots_plus_importants(repertoire):
+def most_important_word(repertoire):
+    ''' Permet de trouver les mots les plus important du corpus'''
     fichiers = []
     motused = "les"
     _y = 0
@@ -130,7 +138,7 @@ def mots_plus_importants(repertoire):
         if fichier.endswith(".txt"):
             fichiers.append(fichier)
     
-    res = calcul_matrice_tf_idf(repertoire)
+    res = get_matrix_tf_idf(repertoire)
     for i in range(len(res)):
         for mot in res[i]:
             if res[i][mot] > res[_y][motused]:
@@ -150,7 +158,8 @@ def mots_plus_importants(repertoire):
 
 
 
-def mots_plus_repetes_president(repertoire):
+def most_repeated_word(repertoire):
+    ''' Permet de trouver les mots les plus répétés dans le corpus'''
     fichiers_chirac = []
     L1 = []
     for fichier in os.listdir(repertoire):
@@ -165,7 +174,7 @@ def mots_plus_repetes_president(repertoire):
     
     max = 0
     for i in range(len(L1)):
-        res = calcul_occurrences(L1[i])
+        res = get_occurrences(L1[i])
         
         for mot in res:
             #print(mot, res[mot])
@@ -184,7 +193,8 @@ def mots_plus_repetes_president(repertoire):
 
     
 
-def president_parle_de_mot(repertoire):
+def president_says_word(repertoire):
+    ''' Permet de trouver le président qui évoque le mot "nation" '''
     fichiers = []
     L1 = []
     for fichier in os.listdir(repertoire):
@@ -202,7 +212,7 @@ def president_parle_de_mot(repertoire):
     max = 0
     savepres = 0
     for i in range(len(L1)):
-        res = calcul_occurrences(L1[i])
+        res = get_occurrences(L1[i])
         
         for mot in res:
             #print(mot, res[mot])
@@ -217,7 +227,8 @@ def president_parle_de_mot(repertoire):
     textoutput = "Le président '{}' est celui qui a cité le plus de fois le mot 'Nation' , il l'a répété {} fois".format(presi,max)
     return textoutput
 
-def premier_president_parle_de_mot(repertoire):
+def first_president_says_word(repertoire):
+    ''' Permet de savoir quel président fu le premier à parler d'un sujet '''
     fichiers = []
     L1 = []
     for fichier in os.listdir(repertoire):
@@ -237,7 +248,7 @@ def premier_president_parle_de_mot(repertoire):
     max = 0
     savepres = 0
     for i in range(len(L1)):
-        res = calcul_occurrences(L1[i])
+        res = get_occurrences(L1[i])
         
         for mot in res:
             #print(mot, res[mot])
@@ -252,7 +263,8 @@ def premier_president_parle_de_mot(repertoire):
     textoutput = "Le président '{}' est celui qui parle le plus du climat / écologie , il l'a répété {} fois".format(presi,max)
     return textoutput
 
-def mots_evoques_par_tous_presidents(repertoire):
+def globally_used_words(repertoire):
+    ''' Permet de trouver les mots utilisées par tout les présidents '''
     fichiers = []
     L1 = []
     for fichier in os.listdir(repertoire):
@@ -269,12 +281,12 @@ def mots_evoques_par_tous_presidents(repertoire):
     motscheck = True
     motsdit = []
     for i in range(len(L1)):
-        res = calcul_occurrences(L1[i])
+        res = get_occurrences(L1[i])
         
         for mot1 in res:
             for j in range(len(L1)):
                 if j != len(L1)-1:
-                    res = calcul_occurrences(L1[j+1])
+                    res = get_occurrences(L1[j+1])
                     
                     for mot2 in res:
                         if mot1 != mot2:
@@ -294,5 +306,5 @@ def mots_evoques_par_tous_presidents(repertoire):
             #print(mot, res[mot])
         
     
-    textoutput = "Tout le sprésidents on au moins cité 1 fois ces mots : {}".format(motsdit)
+    textoutput = "Tout les présidents on au moins cité 1 fois ces mots : {}".format(motsdit)
     return textoutput

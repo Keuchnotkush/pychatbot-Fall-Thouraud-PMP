@@ -1,6 +1,9 @@
+# Auteurs : Hugo Thouraud de Lavignére et Cheikh Tidiane Fall | My First Chat Bot 
+# Ce fichier contient le code de l'interface utilisateur
 import base_fonctions, TF, part2
 repertoire = "speeches"
 def main_menu():
+    ''' Constitue le Menu.'''
     part = int(input("Nous utiliserons la partie (1/2) "))
     while part < 1 or part > 2:
         part = int(input("Nous utiliserons la partie (1/2) "))
@@ -31,38 +34,38 @@ def main_menu():
             x = str(input("Saisir le nom du répértoire à copier : "))
             y = str(input("Saisir le nom du répértoire à coller : "))
             base_fonctions.transition(x,y)
-            base_fonctions.propre(y)
+            base_fonctions.cleaner(y)
             print("Les speeches sont nétoyés !")
         elif ask == 1:
             x = str(input("Saisir le nom du fichier (avec le .txt) "))
             print(TF.tf("speeches",x))
         elif ask == 2:
             x = str(input("Saisir le nom du répértoire "))
-            print(TF.calcul_score_idf(x))
+            print(TF.get_idf_score(x))
         elif ask == 3:
             x = str(input("Saisir le nom du répértoire "))
-            print(TF.calcul_matrice_tf_idf(x))
+            print(TF.get_matrix_tf_idf(x))
         elif ask == 4:
             x = str(input("Saisir le nom du répértoire "))
-            print(TF.mots_moins_importants(x))
+            print(TF.less_important_word(x))
         elif ask == 5:
             x = str(input("Saisir le nom du répértoire "))
-            print(TF.mots_plus_importants(x))
+            print(TF.most_important_word(x))
         elif ask == 6:
             x = str(input("Saisir le nom du répértoire "))
-            print(TF.mots_plus_repetes_president(x))
+            print(TF.most_repeated_word(x))
         elif ask == 7:
             x = str(input("Saisir le nom du répértoire "))
-            print(TF.president_parle_de_mot(x))
+            print(TF.president_says_word(x))
         elif ask == 8:
             x = str(input("Saisir le nom du répértoire "))
-            print(TF.premier_president_parle_de_mot(x))
+            print(TF.first_president_says_word(x))
         elif ask == 9:
             x = str(input("Saisir le nom du répértoire "))
-            print(TF.mots_evoques_par_tous_presidents(x))
+            print(TF.globally_used_words(x))
         elif ask == 10:
             x = str(input("Saisir le nom du répértoire "))
-            base_fonctions.prenomforname(x)
+            base_fonctions.names_f(x)
         elif ask == 11:
             x = str(input("Saisir le nom du répértoire "))
             base_fonctions.extract_names(x)
@@ -72,8 +75,8 @@ def main_menu():
 
     elif part == 2:
         question = str(input("Quelle est votre question ? "))
-        word = part2.motImportant(question)
-        print("Document pertinent retourné :",part2.MotPertinentViaFichier(word))
+        word = part2.Revelant_word(question)
+        print("Document pertinent retourné :",part2.Revelant_word_file(word))
         print("Mot ayant le TF-IDF le plus élevé :",word)
         print("La réponse générée :",part2.reponseViaFile(word))
         print("\n\nRéponse final:\n","{} {}.".format(part2.generationentry(question),part2.reponseViaFile(word)))
